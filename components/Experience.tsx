@@ -22,11 +22,11 @@ export default function Experience() {
   const [goldMode, setGoldMode] = useState(false);
   const [eggShow, setEggShow] = useState(false);
 
-  const lockedRef = useRef(false);
-  const clickCountRef = useRef(0);
-  const clickTimerRef = useRef<ReturnType<typeof setTimeout>>();
-  const keyBufferRef = useRef("");
-  const sceneIdxRef = useRef(0);
+  const lockedRef = useRef<boolean>(false);
+  const clickCountRef = useRef<number>(0);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>();
+  const keyBufferRef = useRef<string>("");
+  const sceneIdxRef = useRef<number>(0);
 
   useEffect(() => {
     sceneIdxRef.current = sceneIdx;
