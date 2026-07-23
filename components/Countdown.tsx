@@ -1,1 +1,61 @@
-"use client";import{useEffect,useState}from"react";import{LAUNCH_DATE}from"@/lib/constants";interface Time{days:number;hours:number;minutes:number;seconds:number;}export default function Countdown(){const[time,setTime]=useState<Time|null>(null);useEffect(()=>{const update=()=>{const now=new Date();const diff=LAUNCH_DATE.getTime()-now.getTime();if(diff<=0){setTime({days:0,hours:0,minutes:0,seconds:0});return;}const days=Math.floor(diff/(1000*60*60*24));const hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));const minutes=Math.floor((diff%(1000*60*60))/(1000*60));const seconds=Math.floor((diff%(1000*60))/1000);setTime({days,hours,minutes,seconds});};update();const interval=setInterval(update,1000);return()=>clearInterval(interval);},[]);if(!time)return null;return(<div className="mt-8 font-mono text-xs tracking-[0.15em] text-ink-dim"><div className="grid grid-cols-4 gap-3 sm:gap-6"><div className="flex flex-col items-center"><span className="text-sm sm:text-base text-gold-bright font-semibold tabular-nums">{String(time.days).padStart(2,"0")}</span><span className="mt-1 text-[9px]">Days</span></div><div className="flex flex-col items-center"><span className="text-sm sm:text-base text-gold-bright font-semibold tabular-nums">{String(time.hours).padStart(2,"0")}</span><span className="mt-1 text-[9px]">Hours</span></div><div className="flex flex-col items-center"><span className="text-sm sm:text-base text-gold-bright font-semibold tabular-nums">{String(time.minutes).padStart(2,"0")}</span><span className="mt-1 text-[9px]">Minutes</span></div><div className="flex flex-col items-center"><span className="text-sm sm:text-base text-gold-bright font-semibold tabular-nums">{String(time.seconds).padStart(2,"0")}</span><span className="mt-1 text-[9px]">Seconds</span></div></div></div>);}
+'use client';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
+
+interface CountdownState {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+}
+
+export default function Countdown() {
+  const [time, setTime] = useState<CountdownState>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    const calculateCountdown = () => {
+      const targetDate = new Date('2026-08-05T00:00:00Z').getTime();
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+      if (difference > 0) {
+        setTime({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    };
+    calculateCountdown();
+    const interval = setInterval(calculateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, []);
+  if (!mounted) return null;
+  const CountdownNumber = ({ value, label }: { value: number; label: string }) => (
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="flex flex-col items-center gap-2">
+      <div className="font-grotesk text-7xl md:text-8xl font-bold text-luxury-gold">{String(value).padStart(2, '0')}</div>
+      <p className="font-inter text-sm md:text-base tracking-widest text-gray-500 uppercase">{label}</p>
+    </motion.div>
+  );
+  return (
+    <section className="relative w-full py-20 flex items-center justify-center px-4 min-h-screen">
+      <div className="flex flex-col items-center gap-16">
+        <motion.h2 initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="font-cormorant text-3xl md:text-4xl font-light tracking-widest text-white">
+          LAUNCHING IN
+        </motion.h2>
+        <div className="flex gap-8 md:gap-12 lg:gap-16 flex-wrap justify-center">
+          <CountdownNumber value={time.days} label="Days" />
+          <CountdownNumber value={time.hours} label="Hours" />
+          <CountdownNumber value={time.minutes} label="Minutes" />
+          <CountdownNumber value={time.seconds} label="Seconds" />
+        </div>
+      </div>
+    </section>
+  );
+}
