@@ -1,1 +1,15 @@
-import type {Metadata} from 'next';import {Cormorant_Garamond,Inter,Space_Grotesk} from 'next/font/google';import './globals.css';const cormorant=Cormorant_Garamond({subsets:['latin'],weight:['300','400','500','600'],style:['normal','italic'],variable:'--font-cormorant',display:'swap'});const inter=Inter({subsets:['latin'],weight:['300','400','500','600'],variable:'--font-inter',display:'swap'});const spaceGrotesk=Space_Grotesk({subsets:['latin'],weight:['400','500','600','700'],variable:'--font-space',display:'swap'});const siteUrl='https://tst.co.zw';export const metadata:Metadata={metadataBase:new URL(siteUrl),title:'TST — The Street Talks | Coming Soon',description:'A new voice is coming. Born in Zimbabwe, built for the world. TST — The Street Talks launches August 10, 2026.',keywords:['TST','The Street Talks','luxury streetwear','Zimbabwe fashion','Harare streetwear','streetwear launch'],openGraph:{title:'TST — The Street Talks',description:'Wear the Voice. Own the Culture. Launching August 10, 2026.',url:siteUrl,siteName:'TST — The Street Talks',type:'website',locale:'en_ZW'},twitter:{card:'summary_large_image',title:'TST — The Street Talks',description:'Wear the Voice. Own the Culture. Launching August 10, 2026.'},robots:{index:true,follow:true}};export default function RootLayout({children}:{children:React.ReactNode}){return(<html lang='en'className={`${cormorant.variable} ${inter.variable} ${spaceGrotesk.variable}`}><body className='h-full bg-black text-ink font-body antialiased overflow-hidden overscroll-none'>{children}</body></html>);}
+import type { Metadata } from "next";
+import "./globals.css";
+export const metadata: Metadata = { title: "TST — The Street Talks | Coming Soon", description: "A New Voice Is Coming. Born in Zimbabwe. Built for the World." };
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;700&family=Inter:wght@400;600&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="bg-luxury-black text-white">{children}</body>
+    </html>
+  );
+}

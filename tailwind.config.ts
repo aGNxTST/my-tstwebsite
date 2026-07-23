@@ -1,3 +1,3 @@
 import type { Config } from 'tailwindcss';
-const config: Config = {content:['./app/**/*.{ts,tsx}','./components/**/*.{ts,tsx}'],theme:{extend:{colors:{black:{DEFAULT:'#0a0a0b',2:'#0e0e10'},gold:{DEFAULT:'#c6a15b',bright:'#eecf8e',dim:'#8a7040'},emerald:{DEFAULT:'#0e3d2e'},burgundy:{DEFAULT:'#4a1122'},ink:{DEFAULT:'#f4f1e9',dim:'#a9a49a',faint:'#6c6860'}},fontFamily:{display:['var(--font-cormorant)','serif'],body:['var(--font-inter)','sans-serif'],mono:['var(--font-space)','sans-serif']}}},plugins:[]};
+const config: Config = { content: ['./app/**/*.{js,ts,jsx,tsx}','./components/**/*.{js,ts,jsx,tsx}'], theme: { extend: { colors: { luxury: { black: '#0a0a0a', gold: '#d4af37', emerald: '#2d5a3d', burgundy: '#6b1b35' } } } }, plugins: [] };
 export default config;
